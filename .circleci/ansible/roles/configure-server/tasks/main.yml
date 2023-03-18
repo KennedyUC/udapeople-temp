@@ -1,16 +1,23 @@
 ---
+- name: Include vars
+  include_vars:
+    dir: vars
+    extensions: [yml]
 
-- name:  "Add Node.js from source"
+- name:  add Node.js source
   become: true
   shell: |
-    curl -sl https://deb.nodesource.com/setup_13.x | sudo -E bash -
+    curl -sl https://deb.nodesource.com/setup_{{ versions.nodejs }}.x | sudo -E bash -
 
-- name: install node.js 13
+- name: install node.js
   become: true
   apt:
     name: ["nodejs"]
     state: latest
     update_cache: yes
+
+- name: npm self-update
+  command: npm install npm@{{ versions.npm }} -g
 
 - name: install pm2
   become: true
@@ -20,8 +27,8 @@
     # state: latest
     # production: yes
 
-- name:  "Move env variables to /etc/profile.d/"
+- name:  "move env variables to /etc/profile.d/"
   become: true
   copy:
-    src: myenv.sh
+    src: env.sh
     dest: /etc/profile.d/
