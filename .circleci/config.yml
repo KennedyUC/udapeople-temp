@@ -171,11 +171,12 @@ jobs:
           
   configure-infrastructure:
     docker:
-      - image: python:3.10-alpine3.16 
+      - image: cimg/base:stable 
     steps:
       - checkout
       - add_ssh_keys: 
-          fingerprints: ["3c:bd:3e:99:e5:eb:11:20:bb:ab:91:18:f9:26:88:24"]
+          fingerprints: 
+            - "3c:bd:3e:99:e5:eb:11:20:bb:ab:91:18:f9:26:88:24"
       - attach_workspace:
           at: ~/
       - run:
