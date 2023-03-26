@@ -67,7 +67,7 @@ Resources:
     Type: AWS::EC2::Instance
     Properties:
       InstanceType: t2.micro
-      ImageId: ami-0c55b159cbfafe1f0
+      ImageId: ami-0778521d914d23bc1
       KeyName: udacity
       SecurityGroupIds:
         - !Ref InstanceSecurityGroup
