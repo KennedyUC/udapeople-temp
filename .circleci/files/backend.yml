@@ -70,7 +70,6 @@ Resources:
       InstanceType: t2.micro
       ImageId: ami-0778521d914d23bc1
       KeyName: udacity
-      SecurityGroupIds:
       NetworkInterfaces:
         - DeviceIndex: 0
           AssociatePublicIpAddress: true
