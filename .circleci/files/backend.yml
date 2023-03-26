@@ -71,9 +71,12 @@ Resources:
       ImageId: ami-0778521d914d23bc1
       KeyName: udacity
       SecurityGroupIds:
-        - !Ref InstanceSecurityGroup
-      SubnetId: !Ref Subnet
-      AssociatePublicIpAddress: true
+      NetworkInterfaces:
+        - DeviceIndex: 0
+          AssociatePublicIpAddress: true
+          SubnetId: !Ref Subnet
+          GroupSet:
+            - !Ref InstanceSecurityGroup
       Tags:
         - Key: Name
           Value: !Sub backend-${ID}
