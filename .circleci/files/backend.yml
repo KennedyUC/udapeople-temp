@@ -70,7 +70,7 @@ Resources:
       ImageId: ami-0c55b159cbfafe1f0
       KeyName: udacity
       SecurityGroupIds:
-        - !Ref SecurityGroup
+        - !Ref InstanceSecurityGroup
       SubnetId: !Ref Subnet
       Tags:
         - Key: Name
