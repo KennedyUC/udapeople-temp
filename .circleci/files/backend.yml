@@ -73,6 +73,7 @@ Resources:
       SecurityGroupIds:
         - !Ref InstanceSecurityGroup
       SubnetId: !Ref Subnet
+      AssociatePublicIpAddress: true
       Tags:
         - Key: Name
           Value: !Sub backend-${ID}
