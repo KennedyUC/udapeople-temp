@@ -20,19 +20,20 @@ Resources:
     Properties:
       VpcId: !Ref VPC
       InternetGatewayId: !Ref InternetGateway
-  Subnet:
-    Type: AWS::EC2::Subnet
-    Properties:
-      VpcId: !Ref VPC
-      CidrBlock: '10.0.1.0/24'
-      AvailabilityZone: 'us-east-1a'
-      Tags:
-        - Key: Name
-          Value: udacity
+  # Subnet:
+  #   Type: AWS::EC2::Subnet
+  #   Properties:
+  #     VpcId: !Ref VPC
+  #     CidrBlock: '10.0.1.0/24'
+  #     AvailabilityZone: 'us-east-1a'
+  #     Tags:
+  #       - Key: Name
+  #         Value: udacity
   InstanceSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupName: !Sub UdaPeople-${ID}
+      VpcId: !Ref VPC
       GroupDescription: Allow port 22 and port 3030.
       SecurityGroupIngress:
         - IpProtocol: tcp
@@ -71,7 +72,7 @@ Resources:
       KeyName: udacity
       SecurityGroupIds:
         - !Ref InstanceSecurityGroup
-      SubnetId: !Ref Subnet
+      #SubnetId: !Ref Subnet
       Tags:
         - Key: Name
           Value: !Sub backend-${ID}
@@ -86,11 +87,11 @@ Resources:
       RouteTableId: !Ref RouteTable
       DestinationCidrBlock: '0.0.0.0/0'
       GatewayId: !Ref InternetGateway
-  SubnetRouteTableAssociation:
-    Type: AWS::EC2::SubnetRouteTableAssociation
-    Properties:
-      SubnetId: !Ref Subnet
-      RouteTableId: !Ref RouteTable
+  # SubnetRouteTableAssociation:
+  #   Type: AWS::EC2::SubnetRouteTableAssociation
+  #   Properties:
+  #     SubnetId: !Ref Subnet
+  #     RouteTableId: !Ref RouteTable
 
 
 
