@@ -216,22 +216,23 @@ jobs:
           
   run-migrations:
     docker:
-      #- image: circleci/node:13.8.0
-      - image: python:3.7-alpine3.16
+      - image: circleci/node:13.8.0
+      #- image: python:3.7-alpine3.16
     steps:
       - checkout
       - run:
           name: Install dependencies
           command: |
-            apk add --update --no-cache tar gzip nodejs npm aws-cli curl
+            sudo apt install -y tar gzip curl
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip -qq awscliv2.zip
+            sudo ./aws/install
       - restore_cache:
           keys: [backend-build]
       - run:
           name: Run migrations
           command: |
             cd backend
-            npm install
-            npm run build
             npm run migrations > migrations.txt
       - run:
           name: Send migration status to kvdb.io
@@ -274,10 +275,13 @@ jobs:
             echo "API_URL = ${API_URL}"
             echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
             cat frontend/.env
+      - restore_cache:
+          keys: [frontend-build]
       - run:
           name: Deploy frontend objects
           command: |
             cd frontend
+            npm install
             npm run build
             tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
@@ -291,7 +295,8 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys: 
-          fingerprints: ["3c:bd:3e:99:e5:eb:11:20:bb:ab:91:18:f9:26:88:24"]
+          fingerprints:
+            - "3c:bd:3e:99:e5:eb:11:20:bb:ab:91:18:f9:26:88:24"
       - attach_workspace:
           at: ~/
       - restore_cache:
@@ -304,14 +309,12 @@ jobs:
           name: Package Backend
           command: |
             cd backend
-            npm i
+            npm install
             npm run build
             cd ..
-            
-            # Zip the directory
-            tar -C backend -czvf build-artifact.tar.gz .
+            tar -C backend -czvf artifact.tar.gz .
             mkdir -p ~/project/.circleci/ansible/roles/deploy/files/
-            mv build-artifact.tar.gz .circleci/ansible/roles/deploy/files/build-artifact.tar.gz
+            mv artifact.tar.gz .circleci/ansible/roles/deploy/files/artifact.tar.gz
       - run:
           name: Deploy backend
           command: |
@@ -356,7 +359,7 @@ jobs:
             if curl -s ${URL} | grep "Welcome"
             then
               # Change this to 0 after the job fails
-              return 0
+              return 1
             else
               return 1
             fi
