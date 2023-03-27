@@ -6,26 +6,19 @@ Parameters:
     Description: Unique identifier.
     Type: String
 Resources:
-  VPC:
-    Type: AWS::EC2::VPC
-    Properties:
-      CidrBlock: '10.0.0.0/16'
-      Tags:
-        - Key: Name
-          Value: udacity
   InternetGateway:
     Type: AWS::EC2::InternetGateway
   VPCGatewayAttachment:
     Type: AWS::EC2::VPCGatewayAttachment
     Properties:
-      VpcId: !Ref VPC
+      VpcId: vpc-0bb50a21eafe17303
       InternetGatewayId: !Ref InternetGateway
   Subnet:
     Type: AWS::EC2::Subnet
     Properties:
-      VpcId: !Ref VPC
+      VpcId: vpc-0bb50a21eafe17303
       CidrBlock: '10.0.1.0/24'
-      AvailabilityZone: 'us-east-1a'
+      AvailabilityZone: 'us-east-1b'
       Tags:
         - Key: Name
           Value: udacity
@@ -33,7 +26,7 @@ Resources:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupName: !Sub UdaPeople-${ID}
-      VpcId: !Ref VPC
+      VpcId: vpc-0bb50a21eafe17303
       GroupDescription: Allow port 22 and port 3030.
       SecurityGroupIngress:
         - IpProtocol: tcp
@@ -82,7 +75,7 @@ Resources:
   RouteTable:
     Type: AWS::EC2::RouteTable
     Properties:
-      VpcId: !Ref VPC
+      VpcId: vpc-0bb50a21eafe17303
   Route:
     Type: AWS::EC2::Route
     DependsOn: VPCGatewayAttachment
