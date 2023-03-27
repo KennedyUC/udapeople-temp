@@ -196,7 +196,7 @@ jobs:
       - checkout
       - add_ssh_keys: 
           fingerprints: 
-            - "3c:bd:3e:99:e5:eb:11:20:bb:ab:91:18:f9:26:88:24"
+            - "49:d9:d8:fa:58:1d:4d:e0:c8:09:de:e4:6d:36:1d:58"
       - attach_workspace:
           at: ~/
       - install_ansible
@@ -296,7 +296,7 @@ jobs:
       - checkout
       - add_ssh_keys: 
           fingerprints:
-            - "3c:bd:3e:99:e5:eb:11:20:bb:ab:91:18:f9:26:88:24"
+            - "49:d9:d8:fa:58:1d:4d:e0:c8:09:de:e4:6d:36:1d:58"
       - attach_workspace:
           at: ~/
       - restore_cache:
