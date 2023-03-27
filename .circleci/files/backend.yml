@@ -17,7 +17,7 @@ Resources:
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: vpc-0bb50a21eafe17303
-      CidrBlock: '10.0.1.0/24'
+      CidrBlock: '10.0.5.0/24'
       AvailabilityZone: 'us-east-1b'
       Tags:
         - Key: Name
