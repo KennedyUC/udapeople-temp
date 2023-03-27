@@ -71,7 +71,7 @@ Resources:
       VpcId: vpc-0bb50a21eafe17303
   Route:
     Type: AWS::EC2::Route
-    DependsOn: VPCGatewayAttachment
+    #DependsOn: VPCGatewayAttachment
     Properties:
       RouteTableId: !Ref RouteTable
       DestinationCidrBlock: '0.0.0.0/0'
