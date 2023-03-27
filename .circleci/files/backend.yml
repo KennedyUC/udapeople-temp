@@ -6,13 +6,6 @@ Parameters:
     Description: Unique identifier.
     Type: String
 Resources:
-  InternetGateway:
-    Type: AWS::EC2::InternetGateway
-  VPCGatewayAttachment:
-    Type: AWS::EC2::VPCGatewayAttachment
-    Properties:
-      VpcId: vpc-0bb50a21eafe17303
-      InternetGatewayId: !Ref InternetGateway
   Subnet:
     Type: AWS::EC2::Subnet
     Properties:
@@ -82,7 +75,7 @@ Resources:
     Properties:
       RouteTableId: !Ref RouteTable
       DestinationCidrBlock: '0.0.0.0/0'
-      GatewayId: !Ref InternetGateway
+      GatewayId: igw-03c1ace621f9ce74f
   SubnetRouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
